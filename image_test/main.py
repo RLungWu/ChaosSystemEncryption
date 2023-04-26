@@ -1,66 +1,45 @@
-from PIL import Image
-import numpy as np
-import math
+from PIL import Image,ImageTk
+import tkinter as tk
+from tkinter.constants import *
+from tkinter import filedialog
+from encryption import encry
+from decryption import decry
 
-def incry(img):
-    print(img)
 
-def encry(img):
-    print(img)
+def browse_image():
+    filename = filedialog.askopenfilename()
+    image = Image.open(filename)
+    photo = ImageTk.PhotoImage(image)
+    label = tk.Label(image=photo)
+    label.image = photo
+    label.pack()
 
+def test():
+    print('hi')
 
 
 def main():
-    #load Image
-    image = Image.open("image2.jpg")
-    image_array = np.array(image)
+    window = tk.Tk()
+    window.title('Chaos')
+    window.geometry('420x460')
+    window.resizable(False, False)
+    window.iconbitmap('icon.ico')#程式的圖檔
 
-    #Tent 映射
-    x0 = 0.234567
-    x = [x0]
+    upload = tk.Button(text='Upload', command=browse_image)
+    upload.place(x = 10,y=10)
 
-    #消除初始影響
-    for i in range(99):
-        xn = x[-1]
-        xn = round(1 - 2 * abs(xn - 0.5),10)
-        x.append(xn)
-    chaos = [x[-1]]
+    enc = tk.Button(text='Encryption')
+    enc. place(x = 150, y = 10)
 
-    for i in range(image_array.shape[0] * image_array.shape[1] * 3 -1):
-        xn = chaos[-1]
-        xn = round(1 - 2 * abs(xn-0.5),10)
-        chaos.append(xn)
+    dec = tk.Button(text='Decryption')
+    dec.place(x=150, y = 40)
 
-    chaos_scaled = np.round(np.array(chaos) * 255).astype(int)
-
-    chaos_scaled_3D = chaos_scaled.reshape((image_array.shape[0], image_array.shape[1],3))
-    
-    #使用xor
-    c = []
-    for i in range(image_array.shape[0]):
-        arr1 = []
-        for j in range(image_array.shape[1]):
-            arr2 = []
-            for k in range(image_array.shape[2]):
-                temp = image_array[i][j][k] ^ chaos_scaled_3D[i][j][k]
-            
-                arr2.append(temp)
-        #print(arr2)
-            arr1.append(arr2)
-        c.append(arr1)
-    
-    #輸出圖片
-    data = np.array(c)
-    image_enc = Image.fromarray(data.astype('uint8'), mode='RGB')
-    image_enc.save('Encrypted_image2.png')
+    download = tk.Button(text='Download')
+    download.place(x=300, y=10)
 
     
 
-
-
-
-
-
+    window.mainloop()
 
 
 if __name__ == '__main__':
