@@ -2,6 +2,7 @@ from PIL import Image,ImageTk
 import tkinter as tk
 from tkinter.constants import *
 from tkinter import filedialog
+
 from encryption import encry
 from decryption import decry
 
@@ -17,7 +18,7 @@ def browse_image():
 def test():
     print('hi')
 
-
+'''
 def main():
     window = tk.Tk()
     window.title('Chaos')
@@ -37,9 +38,12 @@ def main():
     download = tk.Button(text='Download')
     download.place(x=300, y=10)
 
-    
-
     window.mainloop()
+'''
+
+def main():
+    encry()
+    decry()
 
 
 if __name__ == '__main__':
